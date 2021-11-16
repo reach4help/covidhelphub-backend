@@ -1,0 +1,11 @@
+node_modules
+ssl
+.idea
+.DS_Store
+local-creds
+.env
+dist
+.pgdata
+.npmrc
+coverage
+.vscode
