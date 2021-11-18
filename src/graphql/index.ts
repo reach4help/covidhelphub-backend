@@ -14,8 +14,6 @@ export const startGraphQLServer = async (): Promise<GraphQLServerReturn> => {
     resolvers: [OrganizationResolver],
   });
 
-  console.log(schema);
-
   // Create the GraphQL server
   const server = new ApolloServer({
     schema,
