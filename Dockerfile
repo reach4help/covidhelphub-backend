@@ -3,7 +3,6 @@ FROM node:14-buster-slim AS build
 WORKDIR /usr/build
 
 COPY tsconfig.json package*.json ./
-COPY .npmrc .npmrc
 RUN npm install
 COPY src src
 RUN npm run compile

@@ -3,15 +3,12 @@ FROM node:14-alpine
 # Create api directory
 WORKDIR /usr/src/app
 
-# You need to add your NPM account
-COPY .npmrc .npmrc
 # Install app dependencies
 # A wildcard is used to ensure both package.json AND package-lock.json are copied
 # where available (npm@5+)
 COPY package*.json ./
 
 RUN npm install
-RUN rm -f .npmrc
 
 # Bundle app source
 EXPOSE 4000
