@@ -4,7 +4,7 @@
 
 Backend for the backend of the org app for Reach4Help
 
-To start:
+### To start:
 
 - Before we forget! Create a new `.env` file in your root folder with the same content as our [integration](/.env.integration) file. This will be used by our integration tests once we have them.
 - Because our backend needs to connect to stuff like a database, etc. You need to install [docker](https://www.docker.com/get-started) in order to start the project.
