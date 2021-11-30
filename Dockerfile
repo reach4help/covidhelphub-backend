@@ -3,9 +3,9 @@ FROM node:14-buster-slim AS build
 WORKDIR /usr/build
 
 COPY tsconfig.json package*.json ./
-RUN npm install
+RUN yarn install
 COPY src src
-RUN npm run compile
+RUN yarn run compile
 
 # Multi stage build to remove unnecessary files
 FROM node:14-buster-slim
