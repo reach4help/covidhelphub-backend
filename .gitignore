@@ -6,3 +6,4 @@ ssl
 dist
 coverage
 .vscode
+mongo-volume
