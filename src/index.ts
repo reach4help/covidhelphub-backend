@@ -1,21 +1,27 @@
-import dotenv from "dotenv";
-dotenv.config();
 // https://stackoverflow.com/a/53791071/13058340
 import "reflect-metadata";
+import dotenv from "dotenv";
+dotenv.config();
 import { initMongoDb } from "./config/mongodb";
 import { startGraphQLServer } from "./config/graphql";
-import { getManager } from "typeorm";
+// import { getManager } from "typeorm";
 import { Organization } from "./entities/organization.entity";
 
 const init = async () => {
   try {
-    await initMongoDb();
+    const connection = await initMongoDb();
 
     console.log("Connected to MongoDB");
     console.log("Creating test data");
-    const manager = getManager();
-    const r4hOrg = manager.create(Organization, { id: 1, name: "reach4help" });
-    await manager.save(r4hOrg);
+
+    const r4hOrg = connection.manager.create(Organization, {
+      id: 1,
+      name: "reach4help",
+    });
+    await connection.manager.save(r4hOrg);
+
+    console.log("Created test data");
+    console.log("Starting GraphQL Server");
 
     const { url } = await startGraphQLServer();
 

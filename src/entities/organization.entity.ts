@@ -13,7 +13,7 @@ import { Entity, ObjectIdColumn, Column, getManager } from "typeorm";
 @ArgsType()
 class OrganizationArgs {
   @Field(() => String, { nullable: true })
-  id?: "";
+  name?: "";
 }
 
 @ObjectType()
@@ -31,13 +31,13 @@ export class Organization {
 @Resolver(Organization)
 export class OrganizationResolver {
   @Query(() => Organization)
-  async organization(@Args() { id }: OrganizationArgs) {
-    if (!id) throw new Error("You must provide an Id");
+  async organization(@Args() { name }: OrganizationArgs) {
+    if (!name) throw new Error("You must provide an name");
 
     // TODO: Do query to fetch the asked org from DB
     const manager = getManager();
 
-    const org = await manager.findOne(Organization, id);
+    const org = await manager.findOne(Organization, { name });
 
     return org;
   }
