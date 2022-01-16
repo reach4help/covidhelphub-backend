@@ -1,20 +1,24 @@
-import { Resolver, Mutation, Arg, Query } from 'type-graphql';
-import { Organizations, OrganizationsModel } from '../entities/organizations';
-import { OrganizationsInput } from './types/organization-input';
-
-
+import { Resolver, Arg, Query } from 'type-graphql';
+import { Organizations } from '../entities/organizations';
+// import { OrganizationsInput } from './types/organization-input';
+import { getMongoManager } from "typeorm";
 @Resolver(Organizations)
 export class OrganizationsResolver {
   @Query((_returns) => Organizations, { nullable: false })
-  async returnSingleCategory(@Arg('id') id: string) {
+  async returnSingleOrganization(@Arg('id') id: number) {
     if (!id) throw new Error("You must provide an Id");
-    return await OrganizationsModel.findById({ _id: id });
+    const manager = getMongoManager();
+    const org = await manager.findOne(Organizations, { id });
+    return org;
   }
 
   @Query(() => [Organizations])
-  async returnAllCategories() {
-    return await OrganizationsModel.find();
+  async returnAllOrganizations() {
+    const manager = getMongoManager();
+    const org = await manager.find(Organizations);
+    return org;
   }
+
 
   // @Mutation(() => Categories)
   // async createCategory(
