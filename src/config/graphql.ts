@@ -1,8 +1,8 @@
-import { OrganizationResolver } from "./entities/organization.entity";
+import { OrganizationResolver } from "../entities/organization.entity";
 import { ApolloServer } from "apollo-server";
 import { buildSchema } from "type-graphql";
 import { isProd } from "../utils/misc";
-import { graphQlPort } from "../config";
+import { graphQlPort } from "./environment";
 
 interface GraphQLServerReturn {
   url: string;

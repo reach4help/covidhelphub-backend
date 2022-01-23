@@ -1,16 +1,37 @@
-import dotenv from "dotenv";
-dotenv.config();
 // https://stackoverflow.com/a/53791071/13058340
 import "reflect-metadata";
-import { startGraphQLServer } from "./graphql";
+import dotenv from "dotenv";
+dotenv.config();
+import { initMongoDb } from "./config/mongodb";
+import { startGraphQLServer } from "./config/graphql";
+// import { getManager } from "typeorm";
+import { Organization } from "./entities/organization.entity";
 
 const init = async () => {
-  const { url } = await startGraphQLServer();
+  try {
+    const connection = await initMongoDb();
 
-  // TODO: Change this to a proper logger
-  console.log(
-    `GraphQL Server is running, GraphQL Playground available at ${url}`
-  );
+    console.log("Connected to MongoDB");
+    console.log("Creating test data");
+
+    const r4hOrg = connection.manager.create(Organization, {
+      id: 1,
+      name: "reach4help",
+    });
+    await connection.manager.save(r4hOrg);
+
+    console.log("Created test data");
+    console.log("Starting GraphQL Server");
+
+    const { url } = await startGraphQLServer();
+
+    // TODO: Change this to a proper logger
+    console.log(
+      `GraphQL Server is running, GraphQL Playground available at ${url}`
+    );
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 init();
