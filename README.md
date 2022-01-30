@@ -51,7 +51,8 @@ Requests
 
 RequestAssignments
 - id
-- user_id (foreign_key)
+- volunteer_id (foreign_key to polymorphic Users table)
+- beneficiary_id (foreign_key to polymorphic Users table)
 - request_id (foreign_key)
 
 ProgramAssignments
