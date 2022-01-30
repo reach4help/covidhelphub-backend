@@ -33,16 +33,21 @@ Users
 - id
 - name
 - organization_id (foreign_key)
+- request_assignment_id (foreign_key)
+- program_assignment_id (foreign_key)
 
 
 Programs
 (has_many Users through ProgramAssignments)
 - id
 - name
+- organization_id (foreign_key)
+- program_assignment_id (foreign_key)
 
 Requests
 (has_many Users through RequestAssignments)
 - id
+- request_assignment_id
 
 RequestAssignments
 - id
