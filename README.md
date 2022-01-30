@@ -16,3 +16,45 @@ Backend for the backend of the org app for Reach4Help
 When the server starts have a go with the GraphQL playground at:
 
 - `http://localhost:4000/`
+
+### Database Structure
+
+Organizations
+(has_many Users)
+(has_many Programs)
+(has_many Forms)
+- id
+- name
+
+Users 
+(belongs to Organization)
+(has_many Programs through ProgramAssignments)
+(Polymorphic child tables: Volunteers, Beneficiaries, Directors, Managers)
+- id
+- name
+- organization_id (foreign_key)
+
+
+Programs
+(has_many Users through ProgramAssignments)
+- id
+- name
+
+Requests
+(has_many Users through RequestAssignments)
+- id
+
+RequestAssignments
+- id
+- user_id (foreign_key)
+- request_id (foreign_key)
+
+ProgramAssignments
+- id 
+- user_id (foreign_key)
+- program_id (foreign_key)
+
+Forms 
+(belongs_to Organization)
+- id
+- organization_id (foreign_key)
