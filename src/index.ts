@@ -2,16 +2,17 @@
 import "reflect-metadata";
 import dotenv from "dotenv";
 dotenv.config();
-import { initMongoDb } from "./config/mongodb";
+// import { initMongoDb } from "./config/mongodb";
+import { initPostgres } from "./config/postgres";
 import { startGraphQLServer } from "./config/graphql";
 // import { getManager } from "typeorm";
 import { Organization } from "./entities/organization.entity";
 
 const init = async () => {
   try {
-    const connection = await initMongoDb();
+    const connection = await initPostgres();
 
-    console.log("Connected to MongoDB");
+    console.log("Connected to Postgres");
     console.log("Creating test data");
 
     const r4hOrg = connection.manager.create(Organization, {

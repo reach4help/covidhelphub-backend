@@ -15,6 +15,7 @@ services:
       - /usr/src/app/node_modules
     depends_on:
       - mongo
+      - postgres
 
   # https://hub.docker.com/_/mongo
   mongo:
@@ -41,3 +42,12 @@ services:
       ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
     depends_on:
       - mongo
+
+  postgres:
+    image: postgres:12.5
+    ports: 
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "super_secret_12345!"
+      POSTGRES_DB: "chh_db"

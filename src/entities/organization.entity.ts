@@ -2,16 +2,18 @@ import {
   Args,
   ArgsType,
   Field,
-  ID,
   ObjectType,
   Query,
   Resolver,
 } from "type-graphql";
 
-import { Entity, ObjectIdColumn, Column, getManager } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, getManager } from "typeorm";
 
 @ArgsType()
 class OrganizationArgs {
+  @Field(() => Number, { nullable: true })
+  id?: null;
+
   @Field(() => String, { nullable: true })
   name?: "";
 }
@@ -19,8 +21,7 @@ class OrganizationArgs {
 @ObjectType()
 @Entity()
 export class Organization {
-  @ObjectIdColumn()
-  @Field(() => ID)
+  @PrimaryGeneratedColumn()
   id!: number;
 
   @Column()
@@ -31,13 +32,13 @@ export class Organization {
 @Resolver(Organization)
 export class OrganizationResolver {
   @Query(() => Organization)
-  async organization(@Args() { name }: OrganizationArgs) {
-    if (!name) throw new Error("You must provide an name");
+  async organization(@Args() { id }: OrganizationArgs) {
+    if (!id) throw new Error("You must provide an id");
 
     // TODO: Do query to fetch the asked org from DB
     const manager = getManager();
 
-    const org = await manager.findOne(Organization, { name });
+    const org = await manager.findOne(Organization, { id });
 
     return org;
   }
