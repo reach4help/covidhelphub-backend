@@ -4,7 +4,7 @@ import {
   Field,
   ObjectType,
   Query,
-  Resolver,
+  Resolver
 } from "type-graphql";
 
 import { Entity, PrimaryGeneratedColumn, Column, getManager } from "typeorm";
@@ -15,24 +15,24 @@ class OrganizationArgs {
   id?: null;
 
   @Field(() => String, { nullable: true })
-  name?: "";
+  org_name?: "";
 }
 
-@ObjectType()
 @Entity()
+@ObjectType()
 export class Organization {
   @PrimaryGeneratedColumn()
-  id!: number;
+  id: number;
 
   @Column()
   @Field()
-  name!: string;
+  org_name: string;
 }
 
 @Resolver(Organization)
 export class OrganizationResolver {
   @Query(() => Organization)
-  async organization(@Args() { id }: OrganizationArgs) {
+  async findOne(@Args() { id }: OrganizationArgs): Promise<any> {
     if (!id) throw new Error("You must provide an id");
 
     // TODO: Do query to fetch the asked org from DB

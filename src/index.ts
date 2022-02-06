@@ -5,7 +5,6 @@ dotenv.config();
 // import { initMongoDb } from "./config/mongodb";
 import { initPostgres } from "./config/postgres";
 import { startGraphQLServer } from "./config/graphql";
-// import { getManager } from "typeorm";
 import { Organization } from "./entities/organization.entity";
 
 const init = async () => {
@@ -15,11 +14,16 @@ const init = async () => {
     console.log("Connected to Postgres");
     console.log("Creating test data");
 
-    const r4hOrg = connection.manager.create(Organization, {
-      id: 1,
-      name: "reach4help",
-    });
-    await connection.manager.save(r4hOrg);
+    const orgRepo =  connection.getRepository(Organization);
+ 
+    // let org = new Organization();
+    // org.org_name = "reach4help";
+    // await orgRepo.save(org);
+    await orgRepo.createQueryBuilder()
+      .insert()
+      .into(Organization)
+      .values([{id: 1, org_name: 'reach4help'}])
+      .execute();
 
     console.log("Created test data");
     console.log("Starting GraphQL Server");

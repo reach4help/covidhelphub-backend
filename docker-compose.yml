@@ -51,3 +51,5 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: "super_secret_12345!"
       POSTGRES_DB: "chh_db"
+    volumes: 
+      - ./db/structure.sql:/docker-entrypoint-initdb.d/structure.sql
