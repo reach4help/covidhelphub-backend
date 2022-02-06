@@ -7,6 +7,10 @@ import { initPostgres } from "./config/postgres";
 import { startGraphQLServer } from "./config/graphql";
 import { Organization } from "./entities/organization.entity";
 
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
 const init = async () => {
   try {
     const connection = await initPostgres();
@@ -16,16 +20,21 @@ const init = async () => {
 
     const orgRepo =  connection.getRepository(Organization);
  
-    // let org = new Organization();
-    // org.org_name = "reach4help";
-    // await orgRepo.save(org);
-    await orgRepo.createQueryBuilder()
-      .insert()
-      .into(Organization)
-      .values([{id: 1, org_name: 'reach4help'}])
-      .execute();
+    let org = new Organization();
+    org.org_name = "reach4help";
+    await orgRepo.save(org);
+    // await orgRepo.createQueryBuilder()
+    //   .insert()
+    //   .into(Organization)
+    //   .values([{id: 1, org_name: 'reach4help'}])
+    //   .execute();
 
     console.log("Created test data");
+
+    console.log("Using Prisma to fetch the results");
+    const data = await prisma.organization.findMany();
+    console.log(data);
+
     console.log("Starting GraphQL Server");
 
     const { url } = await startGraphQLServer();
