@@ -7,10 +7,10 @@ export const initPostgres = async () => {
     host: "postgres", // Not localhost, because we're connecting within our docker network directly to the mongo service
     port: 5432,
     database: postgresDbName,
-    entities: [__dirname + "/../entities/organization.entity.ts"],
+    entities: [__dirname + "/../entities/*.ts"],
     username: postgresUser,
     password: postgresPassword,
-    synchronize: true // This will need to be turned off in production in favor of an actual structure.sql script
+    synchronize: false // This will need to be turned off in production in favor of an actual structure.sql script
   });
 
   return connection;

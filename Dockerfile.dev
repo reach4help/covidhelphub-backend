@@ -8,9 +8,12 @@ WORKDIR /usr/src/app
 # where available (npm@5+)
 COPY package*.json ./
 COPY yarn.lock ./
+# Copying Prisma schema for when we need it later to genrate clients/migrate/deploy
+COPY prisma ./prisma/
 
 RUN yarn install
-
+# Generating a prisma client (could be done using a CMD script in future for CI/CD)
+RUN npx prisma generate
 # Bundle app source
 EXPOSE 4000
 
