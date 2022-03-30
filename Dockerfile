@@ -5,6 +5,8 @@ WORKDIR /usr/build
 COPY tsconfig.json package*.json ./
 RUN yarn install
 COPY src src
+# Generating a prisma client (could be done using a CMD script in future for CI/CD)
+RUN npx prisma generate
 RUN yarn run compile
 
 # Multi stage build to remove unnecessary files
